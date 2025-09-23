@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>Birthday Surprise</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+      font-family: "Comic Sans MS", cursive;
+      margin: 0;
+    }
+
+    .phone {
+      width: 350px;
+      height: 700px;
+      background: #d9d9d9;
+      border-radius: 50px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      padding: 12px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .screen {
+      width: 100%;
+      height: 100%;
+      background: #fff5fb;
+      border-radius: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      position: relative;
+      text-align: center;
+    }
+
+    .notch {
+      width: 120px;
+      height: 25px;
+      background: #000;
+      border-radius: 12px;
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    h2 {
+      color: #ff4d94;
+      margin-top: 60px;
+      margin-bottom: 20px;
+      font-size: 1.4em;
+    }
+
+    .qr-box {
+      background: #fff;
+      padding: 15px;
+      border-radius: 20px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+
+    .qr-box img {
+      width: 220px;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    p {
+      margin-top: 20px;
+      font-size: 1em;
+      color: #555;
+    }
+
+    .home-btn {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #ccc;
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: inset 0 3px 6px rgba(0,0,0,0.3);
+    }
+
+    /* 📱 Responsive */
+    @media (max-width: 480px) {
+      .phone {
+        width: 90vw;
+        height: 90vh;
+      }
+      .qr-box img {
+        width: 60vw;
+        height: 60vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="phone">
+    <div class="screen">
+      <div class="notch"></div>
+      <h2>สแกนดูหน่อยสินันทกานต์</h2>
+      <div class="qr-box">
+        <!-- 👉 ใส่ QR code ของจริงแทน qr.png -->
+        <img src="D:\Sirintra\bing_generated_qrcode (5).png" alt="QR Code">
+      </div>
+      <p>ใช้กล้องใหม่แสกนพี่เลยสิ ตื่นเต้น</p>
+      <div class="home-btn"></div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>Birthday Letter</title>
+  <style>
+    body {
+      background: #ffe6f2;
+      font-family: 'Comic Sans MS', cursive;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    h1 {
+      color: #ff4da6;
+      margin-bottom: 20px;
+    }
+
+    /* ซองจดหมาย */
+    #envelope {
+      width: 200px;
+      height: 140px;
+      background: #ff99cc;
+      position: relative;
+      cursor: pointer;
+      animation: floatUp 3s ease-in-out forwards;
+    }
+
+    #envelope:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      border-left: 100px solid transparent;
+      border-right: 100px solid transparent;
+      border-bottom: 70px solid #ff66b2;
+    }
+
+    #envelope:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      border-left: 100px solid transparent;
+      border-right: 100px solid transparent;
+      border-top: 70px solid #ff66b2;
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(200px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* กล่องข้อความ */
+    #messageBox {
+      display: none;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      text-align: center;
+      max-width: 400px;
+      animation: fadeIn 1s forwards;
+    }
+
+    #messageBox h2 {
+      color: #ff3399;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* สไลด์โชว์ */
+    .slideshow {
+      margin-top: 15px;
+      width: 300px;
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 15px;
+    }
+
+    .slideshow img {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      opacity: 0;
+      transition: opacity 1s;
+    }
+
+    .slideshow img.active {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1>💌 กดซองจดหมายสิ 💕</h1>
+  <div id="envelope"></div>
+
+  <div id="messageBox">
+    <h2>สุขสันต์วันเกิดนะคนเก่ง 🎂</h2>
+    <p>ขอให้มีความสุขมาก ๆ สุขภาพแข็งแรง และอยู่ด้วยกันแบบนี้ไปนาน ๆ เลยนะ 💖</p>
+    <div class="slideshow">
+      <img src="memory1.jpg" class="active">
+      <img src="memory2.jpg">
+      <img src="memory3.jpg">
+    </div>
+  </div>
+
+  <script>
+    const envelope = document.getElementById("envelope");
+    const messageBox = document.getElementById("messageBox");
+    const images = document.querySelectorAll(".slideshow img");
+    let current = 0;
+
+    envelope.addEventListener("click", () => {
+      envelope.style.display = "none";
+      messageBox.style.display = "block";
+    });
+
+    // สไลด์โชว์อัตโนมัติ
+    setInterval(() => {
+      images[current].classList.remove("active");
+      current = (current + 1) % images.length;
+      images[current].classList.add("active");
+    }, 3000);
+  </script>
+</body>
+</html>
