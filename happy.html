@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Happy Birthday</title>
-  <!-- ฟอนต์สวย -->
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
   <style>
     body {
@@ -37,83 +36,28 @@
       font-family: 'Great Vibes', cursive; 
       font-weight: 600;
     }
-
-    /* เค้ก */
-    .cake-container {
-      position: relative;
-      width: 280px;
-      height: 340px;
-    }
-    .layer {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 18px;
-      background: #eecdb3; 
-      border: 3px solid #dfc7b2;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    }
+    .cake-container { position: relative; width: 280px; height: 340px; }
+    .layer { position: absolute; left: 50%; transform: translateX(-50%); border-radius: 18px; background: #eecdb3; border: 3px solid #dfc7b2; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
     .layer1 { width: 260px; height: 80px; bottom: 0; }
     .layer2 { width: 200px; height: 70px; bottom: 90px; }
     .layer3 { width: 140px; height: 60px; bottom: 170px; }
-
     .icing { position: absolute; left: 50%; transform: translateX(-50%); height: 20px; background: #f1eae3; border-radius: 0 0 20px 20px; }
     .icing1 { width: 260px; bottom: 80px; }
     .icing2 { width: 200px; bottom: 160px; }
     .icing3 { width: 140px; bottom: 230px; }
-
     .drop { position: absolute; width: 20px; height: 20px; background: #fffaf5; border-radius: 50%; }
     .layer1 .drop { bottom: -10px; }
     .layer2 .drop { bottom: -10px; }
     .layer3 .drop { bottom: -10px; }
-
     .d1 { left: 20px; }
     .d2 { left: 60px; }
     .d3 { left: 100px; }
     .d4 { right: 20px; }
     .d5 { right: 60px; }
-
-    .candle {
-      position: absolute;
-      width: 14px;
-      height: 50px;
-      background: repeating-linear-gradient(to bottom, #fff, #fff 12px, #d9a066 12px, #d9a066 24px);
-      border-radius: 4px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
-      display: none;
-      z-index: 20;
-    }
-    .flame {
-      position: absolute;
-      top: -22px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 18px;
-      height: 24px;
-      background: radial-gradient(circle, #ffd75f 40%, #ff9a1f 70%, transparent 100%);
-      border-radius: 50%;
-      animation: flicker 0.25s infinite alternate;
-    }
-    @keyframes flicker {
-      from { transform: translateX(-50%) scale(1); opacity: 1; }
-      to { transform: translateX(-50%) scale(1.2) translateY(-2px); opacity: 0.75; }
-    }
-
-    .mute-btn {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: #e6d2c2;
-      border: none;
-      border-radius: 8px;
-      padding: 5px 10px;
-      font-size: 14px;
-      cursor: pointer;
-      z-index: 50;
-    }
-
-    /* ซ่อน iframe */
-    #ytMusic { display:none; }
+    .candle { position: absolute; width: 14px; height: 50px; background: repeating-linear-gradient(to bottom, #fff, #fff 12px, #d9a066 12px, #d9a066 24px); border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.2); display: none; z-index: 20; }
+    .flame { position: absolute; top: -22px; left: 50%; transform: translateX(-50%); width: 18px; height: 24px; background: radial-gradient(circle, #ffd75f 40%, #ff9a1f 70%, transparent 100%); border-radius: 50%; animation: flicker 0.25s infinite alternate; }
+    @keyframes flicker { from { transform: translateX(-50%) scale(1); opacity: 1; } to { transform: translateX(-50%) scale(1.2) translateY(-2px); opacity: 0.75; } }
+    .mute-btn { position: absolute; top: 10px; right: 10px; background: #e6d2c2; border: none; border-radius: 8px; padding: 5px 10px; font-size: 14px; cursor: pointer; z-index: 50; }
   </style>
 </head>
 <body>
@@ -121,75 +65,67 @@
     <h1>Happy Birthday</h1>
     <h1>My Love</h1>
     <button class="mute-btn" onclick="toggleAudio(event)">🔊</button>
-
     <div class="cake-container">
       <div class="layer layer1">
         <div class="drop d1"></div><div class="drop d2"></div><div class="drop d3"></div><div class="drop d4"></div><div class="drop d5"></div>
       </div>
       <div class="icing icing1"></div>
-
       <div class="layer layer2">
         <div class="drop d1"></div><div class="drop d2"></div><div class="drop d3"></div><div class="drop d4"></div>
       </div>
       <div class="icing icing2"></div>
-
       <div class="layer layer3">
         <div class="drop d1"></div><div class="drop d2"></div><div class="drop d3"></div>
       </div>
       <div class="icing icing3"></div>
-
-      <!-- เทียน -->
       <div class="candle" id="candle1" style="bottom: 240px; left: 35%;"></div>
       <div class="candle" id="candle2" style="bottom: 240px; left: 50%;"></div>
       <div class="candle" id="candle3" style="bottom: 240px; left: 65%;"></div>
     </div>
   </div>
 
-  <!-- ฝังเพลง YouTube -->
-  <div id="ytMusic">
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/F5dehvXXwgY?si=4fZs0QwG21g5JSpz&amp;start=71" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-  </div>
+  <audio id="bgMusic">
+    <source src="D:\surprise\Boyd Kosiyabong - เหมือนเคย ft. Seattha Sirachaya (Official Lyric Video)(mp3j.cc).mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
 
-  <script src="https://www.youtube.com/iframe_api"></script>
   <script>
     let candleCount = 0;
-    let player;
-
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('ytPlayer', {
-        events: { 'onReady': event => { 
-          event.target.mute(); // เริ่ม muted ก่อน
-        }}
-      });
-    }
+    const music = document.getElementById('bgMusic');
+    const hookStart = 70; // เริ่มท่อนฮุก (วินาที)
+    const hookEnd = 90;   // จบท่อนฮุก (วินาที)
 
     function addCandle() {
       candleCount++;
-      if (candleCount <= 3) {
+      if(candleCount <= 3){
         const candle = document.getElementById(`candle${candleCount}`);
         candle.style.display = "block";
         const flame = document.createElement("div");
         flame.className = "flame";
         candle.appendChild(flame);
 
-        // เล่นเพลงครั้งแรกหลังคลิก
-        if(player && candleCount === 1){
-          player.playVideo();
-          player.unMute();
+        if(candleCount === 1){
+          music.currentTime = hookStart;
+          music.play().catch(()=>{});
         }
-
       } else {
         window.location.href = "letter.html";
       }
     }
 
-    function toggleAudio(event) {
+    music.addEventListener('timeupdate', () => {
+      if(music.currentTime >= hookEnd){
+        music.pause();
+      }
+    });
+
+    function toggleAudio(event){
       event.stopPropagation();
-      if(player.isMuted()){
-        player.unMute();
+      if(music.paused){
+        music.play().catch(()=>{});
         event.target.textContent = "🔊";
       } else {
-        player.mute();
+        music.pause();
         event.target.textContent = "🔇";
       }
     }
