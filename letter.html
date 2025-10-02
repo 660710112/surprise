@@ -3,117 +3,90 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Birthday Heart & Memories</title>
+<title>Birthday Magic Letter</title>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
   body {
     margin: 0;
     height: 100vh;
+    background: #fff0f6;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #fff0f6;
-    font-family: 'Segoe UI', sans-serif;
     overflow: hidden;
-    flex-direction: column;
+    font-family: 'Segoe UI', sans-serif;
   }
 
-  /* หัวใจใหญ่ */
+  /* หัวใจเด้ง */
   #heartWrapper {
-    width: 200px;
-    height: 200px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 220px;
+    height: 220px;
     cursor: pointer;
     z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-
   #heartWrapper svg {
     width: 100%;
     height: 100%;
+    fill: red;
     animation: pulse 1s infinite alternate;
   }
-
   @keyframes pulse {
     from { transform: scale(1); }
     to { transform: scale(1.2); }
   }
 
-  /* กระดาษ A4 */
-  #paper {
-    width: 280px;
-    height: 360px;
-    background: #fffaf0;
+  /* กระดาษเวทมนต์พอดีจอ iPhone */
+  #magicLetter {
+    width: 90%;
+    max-width: 360px;
+    height: 450px;
+    background: #fffefc;
     border-radius: 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    transition: transform 0.5s ease;
+    transition: transform 0.8s ease;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 15px;
+    padding: 25px;
     z-index: 50;
+    text-align: center;
+    font-family: 'Great Vibes', cursive;
+    font-size: 20px;
+    color: #ff3366;
+    line-height: 1.6;
+    cursor: default;
     overflow: hidden;
-    touch-action: pan-y;
-    perspective: 1000px; /* สำหรับ 3D flip */
   }
-
-  #paper.show {
+  #magicLetter.show {
     transform: translate(-50%, -50%) scale(1);
   }
 
-  /* Carousel ภาพ */
+  /* Carousel รูปภาพ */
   #carousel {
     width: 100%;
-    flex: 1;
+    height: 150px;
     display: flex;
-    transition: transform 0.3s ease;
-    transform-style: preserve-3d;
+    margin-top: 10px;
+    overflow: hidden;
+    touch-action: pan-y;
   }
-
   .card {
     width: 100%;
+    flex-shrink: 0;
     height: 100%;
     border-radius: 15px;
-    flex-shrink: 0;
     background-size: cover;
     background-position: center;
     cursor: pointer;
     backface-visibility: hidden;
-    transform-style: preserve-3d;
-  }
-
-  .card.flipped {
-    transform: rotateY(180deg);
-  }
-
-  .card .back {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    background: #fff0f6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Great Vibes', cursive;
-    font-size: 20px;
-    color: #ff4d94;
-    border-radius: 15px;
-    backface-visibility: hidden;
-    transform: rotateY(180deg);
-  }
-
-  #messageText {
-    margin-top: 10px;
-    text-align: center;
-    font-family: 'Great Vibes', cursive;
-    font-size: 18px;
-    color: #ff4d94;
+    position: relative;
   }
 </style>
 </head>
@@ -127,78 +100,99 @@
   </svg>
 </div>
 
-<!-- กระดาษ A4 -->
-<div id="paper">
-  <div id="carousel">
-    <div class="card" style="background-image: url('memory1.jpg');">
-      <div class="back">ความทรงจำ 1 💖</div>
-    </div>
-    <div class="card" style="background-image: url('memory2.jpg');">
-      <div class="back">ความทรงจำ 2 💖</div>
-    </div>
-    <div class="card" style="background-image: url('memory3.jpg');">
-      <div class="back">ความทรงจำ 3 💖</div>
-    </div>
+<!-- กระดาษเวทมนต์ -->
+<div id="magicLetter">
+  <div id="textContent">
+    สวัสดีครับเจ้าของวันเกิด ชีวิตที่ผ่านมาเป็นยังไงบ้าง มีความสุขมั้ย ต่อจากนี้เมย์ขอให้ปาร์ตี้มีความสุขมากๆเลยนะ จะทำอะไรก็ขอให้มันออกมาดีเมย์จะยืนข้างๆปาร์ตี้แบบนี้ไปตลอดนะ ต่อให้วันนั้นเธอจะประสบความสำเร็จหรือไม่ก็ตามเมย์จะอยู่ซัพพอร์ตความฝันของเธอจนกว่าเธอจะบอกว่ากับเราว่าเธอประสบความสำเร็จแล้ว เมย์ขอยืนข้างๆเธอนะคะ เมย์ภูมิใจในตัวเธอที่สุด เธอเองก็ต้องภูมิใจในตัวเองนะ รักเธอเสมอ
+    <br>And may your dreams always guide you, may every step you take be filled with love and joy. I will always be by your side, supporting you, not just today but for all the days to come. Your happiness will always be my happiness.
   </div>
-  <p id="messageText">สุขสันต์วันเกิดนะ 💌 เลื่อนดูความทรงจำ</p>
+
+  <div id="carousel">
+    <div class="card" style="background-image: url('memory1.jpg');"></div>
+    <div class="card" style="background-image: url('memory2.jpg');"></div>
+    <div class="card" style="background-image: url('memory3.jpg');"></div>
+  </div>
 </div>
 
 <!-- เพลง -->
 <audio id="bgMusic">
   <source src="https://github.com/660710112/surprise/raw/main/Boyd%20Kosiyabong%20-%20เหมือนเคย%20ft.%20Seattha%20Sirachaya%20(Official%20Lyric%20Video)(mp3j.cc).mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
 </audio>
 
 <script>
 const heartWrapper = document.getElementById("heartWrapper");
-const paper = document.getElementById("paper");
+const magicLetter = document.getElementById("magicLetter");
 const music = document.getElementById("bgMusic");
 const hookStart = 69;
 const hookEnd = 150;
 const carousel = document.getElementById("carousel");
 const cards = carousel.querySelectorAll(".card");
-const messageText = document.getElementById("messageText");
 
 let startX = 0;
 let currentTranslate = 0;
 let currentIndex = 0;
+let isDragging = false;
 
-// คลิกหัวใจ → แสดงกระดาษ + เล่นเพลง
+// คลิกหัวใจ → ซ่อนหัวใจ + แสดงกระดาษ + เล่นเพลง
 heartWrapper.addEventListener("click", () => {
-  paper.classList.add("show");
+  heartWrapper.style.display = 'none';
+  magicLetter.classList.add("show");
   music.currentTime = hookStart;
   music.play().catch(()=>{});
 });
 
-// ให้เพลงหยุดที่ hookEnd
+// เพลงหยุด
 music.addEventListener('timeupdate', () => {
-  if(music.currentTime >= hookEnd){
-    music.pause();
-  }
+  if(music.currentTime >= hookEnd) music.pause();
 });
 
-// Touch event สำหรับ swipe
-carousel.addEventListener("touchstart", e => { startX = e.touches[0].clientX; });
+// ฟังก์ชันอัปเดตตำแหน่ง carousel
+function updateCarousel() {
+  currentTranslate = -currentIndex * magicLetter.clientWidth;
+  carousel.style.transition = 'transform 0.3s ease';
+  carousel.style.transform = `translateX(${currentTranslate}px)`;
+}
 
+// Touch สำหรับมือถือ
+carousel.addEventListener("touchstart", e => {
+  startX = e.touches[0].clientX;
+  carousel.style.transition = 'none';
+});
 carousel.addEventListener("touchmove", e => {
   const dx = e.touches[0].clientX - startX;
   carousel.style.transform = `translateX(${currentTranslate + dx}px)`;
 });
-
 carousel.addEventListener("touchend", e => {
   const dx = e.changedTouches[0].clientX - startX;
   if (dx < -50 && currentIndex < cards.length - 1) currentIndex++;
   else if (dx > 50 && currentIndex > 0) currentIndex--;
-  currentTranslate = -currentIndex * paper.clientWidth;
-  carousel.style.transform = `translateX(${currentTranslate}px)`;
-  messageText.textContent = `ความทรงจำ ${currentIndex + 1} 💌`;
+  updateCarousel();
 });
 
-// คลิกเพื่อพลิกการ์ด
-cards.forEach(card => {
-  card.addEventListener("click", () => {
-    card.classList.toggle("flipped");
-  });
+// Mouse สำหรับ desktop
+carousel.addEventListener("mousedown", e => {
+  isDragging = true;
+  startX = e.clientX;
+  carousel.style.transition = 'none';
+});
+carousel.addEventListener("mousemove", e => {
+  if(!isDragging) return;
+  const dx = e.clientX - startX;
+  carousel.style.transform = `translateX(${currentTranslate + dx}px)`;
+});
+carousel.addEventListener("mouseup", e => {
+  if(!isDragging) return;
+  isDragging = false;
+  const dx = e.clientX - startX;
+  if (dx < -50 && currentIndex < cards.length - 1) currentIndex++;
+  else if (dx > 50 && currentIndex > 0) currentIndex--;
+  updateCarousel();
+});
+carousel.addEventListener("mouseleave", e => {
+  if(isDragging){
+    isDragging = false;
+    updateCarousel();
+  }
 });
 </script>
 
