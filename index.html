@@ -2,42 +2,31 @@
 <html lang="th">
 <head>
   <meta charset="UTF-8">
-  <title>Birthday Surprise</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📱 Surprise QR Code</title>
   <style>
     body {
+      margin: 0;
+      height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
-      font-family: "Comic Sans MS", cursive;
-      margin: 0;
+      background: linear-gradient(135deg, #ffc8dd, #bde0fe);
+      font-family: "Comic Sans MS", cursive, sans-serif;
     }
 
     .phone {
-      width: 350px;
-      height: 700px;
-      background: #d9d9d9;
-      border-radius: 50px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-      padding: 12px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .screen {
-      width: 100%;
-      height: 100%;
-      background: #fff5fb;
-      border-radius: 40px;
+      width: 360px;
+      height: 640px;
+      border: 12px solid #333;
+      border-radius: 30px;
+      background: #fff0f6;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 20px;
       position: relative;
-      text-align: center;
+      overflow: hidden;
     }
 
     .notch {
@@ -51,30 +40,39 @@
       transform: translateX(-50%);
     }
 
+    .screen {
+      flex: 1;
+      width: 100%;
+      padding: 40px 20px 20px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
     h2 {
       color: #ff4d94;
-      margin-top: 60px;
-      margin-bottom: 20px;
-      font-size: 1.4em;
+      margin: 0 0 20px 0;
     }
 
-    .qr-box {
-      background: #fff;
+    #qrcode {
+      margin-top: 10px;
+      background: white;
       padding: 15px;
       border-radius: 20px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     }
 
-    .qr-box img {
-      width: 220px;
-      height: 220px;
-      object-fit: cover;
-    }
-
-    p {
+    .emoji {
+      font-size: 40px;
       margin-top: 20px;
-      font-size: 1em;
-      color: #555;
+      animation: float 3s infinite ease-in-out;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
     }
 
     .home-btn {
@@ -83,37 +81,35 @@
       border-radius: 50%;
       background: #ccc;
       position: absolute;
-      bottom: 20px;
+      bottom: 15px;
       left: 50%;
       transform: translateX(-50%);
       box-shadow: inset 0 3px 6px rgba(0,0,0,0.3);
-    }
-
-    /* 📱 Responsive */
-    @media (max-width: 480px) {
-      .phone {
-        width: 90vw;
-        height: 90vh;
-      }
-      .qr-box img {
-        width: 60vw;
-        height: 60vw;
-      }
     }
   </style>
 </head>
 <body>
   <div class="phone">
+    <div class="notch"></div>
     <div class="screen">
-      <div class="notch"></div>
-      <h2>สแกนดูหน่อยสินันทกานต์</h2>
-      <div class="qr-box">
-        <!-- 👉 ใส่ QR code ของจริงแทน qr.png -->
-        <img src="D:\Sirintra\bing_generated_qrcode (5).png" alt="QR Code">
-      </div>
-      <p>ใช้กล้องใหม่แสกนพี่เลยสิ ตื่นเต้น</p>
-      <div class="home-btn"></div>
+      <h2>🎀 Happy Birthday 🎀</h2>
+      <div id="qrcode"></div>
+      <div class="emoji">🌸✨🐰💖</div>
     </div>
+    <div class="home-btn"></div>
   </div>
+
+  <!-- โหลดไลบรารี qrcode.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    new QRCode(document.getElementById("qrcode"), {
+      text: "https://660710112.github.io/surprise/password.html", // ลิงก์ไป password.html
+      width: 200,
+      height: 200,
+      colorDark : "#000000",
+      colorLight : "#ffffff",
+      correctLevel : QRCode.CorrectLevel.H
+    });
+  </script>
 </body>
 </html>
