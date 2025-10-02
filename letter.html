@@ -1,136 +1,98 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <title>Birthday Letter</title>
-  <style>
-    body {
-      background: #ffe6f2;
-      font-family: 'Comic Sans MS', cursive;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      overflow: hidden;
-      flex-direction: column;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ซองจดหมายจริง</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    background: #fef5f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+  }
 
-    h1 {
-      color: #ff4da6;
-      margin-bottom: 20px;
-    }
+  /* ซองจดหมาย */
+  .envelope-container {
+    width: 300px;
+    height: 200px;
+    position: relative;
+    perspective: 800px;
+    cursor: pointer;
+  }
 
-    /* ซองจดหมาย */
-    #envelope {
-      width: 200px;
-      height: 140px;
-      background: #ff99cc;
-      position: relative;
-      cursor: pointer;
-      animation: floatUp 3s ease-in-out forwards;
-    }
+  .envelope {
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
 
-    #envelope:before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      border-left: 100px solid transparent;
-      border-right: 100px solid transparent;
-      border-bottom: 70px solid #ff66b2;
-    }
+  /* ตัวซองด้านล่าง */
+  .envelope .body {
+    width: 100%;
+    height: 100%;
+    background: #fff0f6;
+    border: 2px solid #ff99cc;
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
 
-    #envelope:after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      border-left: 100px solid transparent;
-      border-right: 100px solid transparent;
-      border-top: 70px solid #ff66b2;
-    }
+  /* ฝาซอง */
+  .envelope .flap {
+    width: 0;
+    height: 0;
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-bottom: 100px solid #ffb3d1;
+    position: absolute;
+    top: -100px;
+    left: 0;
+    transform-origin: top center;
+    transition: transform 1s ease;
+    z-index: 2;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  }
 
-    @keyframes floatUp {
-      from { transform: translateY(200px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
+  .envelope.open .flap {
+    transform: rotateX(180deg);
+  }
 
-    /* กล่องข้อความ */
-    #messageBox {
-      display: none;
-      background: white;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      text-align: center;
-      max-width: 400px;
-      animation: fadeIn 1s forwards;
-    }
-
-    #messageBox h2 {
-      color: #ff3399;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* สไลด์โชว์ */
-    .slideshow {
-      margin-top: 15px;
-      width: 300px;
-      height: 200px;
-      position: relative;
-      overflow: hidden;
-      border-radius: 15px;
-    }
-
-    .slideshow img {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      opacity: 0;
-      transition: opacity 1s;
-    }
-
-    .slideshow img.active {
-      opacity: 1;
-    }
-  </style>
+  .text-hint {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 80px;
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.5rem;
+    color: #ff4d94;
+    z-index: 3;
+    pointer-events: none;
+  }
+</style>
 </head>
 <body>
-  <h1>💌 กดซองจดหมายสิ 💕</h1>
-  <div id="envelope"></div>
 
-  <div id="messageBox">
-    <h2>สุขสันต์วันเกิดนะคนเก่ง 🎂</h2>
-    <p>ขอให้มีความสุขมาก ๆ สุขภาพแข็งแรง และอยู่ด้วยกันแบบนี้ไปนาน ๆ เลยนะ 💖</p>
-    <div class="slideshow">
-      <img src="memory1.jpg" class="active">
-      <img src="memory2.jpg">
-      <img src="memory3.jpg">
-    </div>
+<div class="envelope-container" id="envelopeContainer">
+  <div class="envelope" id="envelope">
+    <div class="flap"></div>
+    <div class="body"></div>
+    <div class="text-hint">💌 กดเพื่อเปิดซอง 💌</div>
   </div>
+</div>
 
-  <script>
-    const envelope = document.getElementById("envelope");
-    const messageBox = document.getElementById("messageBox");
-    const images = document.querySelectorAll(".slideshow img");
-    let current = 0;
+<script>
+  const envelope = document.getElementById("envelope");
+  envelope.addEventListener("click", () => {
+    envelope.classList.toggle("open");
+  });
+</script>
 
-    envelope.addEventListener("click", () => {
-      envelope.style.display = "none";
-      messageBox.style.display = "block";
-    });
-
-    // สไลด์โชว์อัตโนมัติ
-    setInterval(() => {
-      images[current].classList.remove("active");
-      current = (current + 1) % images.length;
-      images[current].classList.add("active");
-    }, 3000);
-  </script>
 </body>
 </html>
