@@ -3,95 +3,203 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ซองจดหมายจริง</title>
+<title>Birthday Heart & Memories</title>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
   body {
     margin: 0;
-    background: #fef5f9;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    background: #fff0f6;
     font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+    flex-direction: column;
   }
 
-  /* ซองจดหมาย */
-  .envelope-container {
-    width: 300px;
+  /* หัวใจใหญ่ */
+  #heartWrapper {
+    width: 200px;
     height: 200px;
-    position: relative;
-    perspective: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
+    z-index: 10;
   }
 
-  .envelope {
+  #heartWrapper svg {
     width: 100%;
     height: 100%;
-    position: relative;
+    animation: pulse 1s infinite alternate;
   }
 
-  /* ตัวซองด้านล่าง */
-  .envelope .body {
+  @keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.2); }
+  }
+
+  /* กระดาษ A4 */
+  #paper {
+    width: 280px;
+    height: 360px;
+    background: #fffaf0;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    z-index: 50;
+    overflow: hidden;
+    touch-action: pan-y;
+    perspective: 1000px; /* สำหรับ 3D flip */
+  }
+
+  #paper.show {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  /* Carousel ภาพ */
+  #carousel {
+    width: 100%;
+    flex: 1;
+    display: flex;
+    transition: transform 0.3s ease;
+    transform-style: preserve-3d;
+  }
+
+  .card {
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    flex-shrink: 0;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+  }
+
+  .card.flipped {
+    transform: rotateY(180deg);
+  }
+
+  .card .back {
+    position: absolute;
+    top: 0; left: 0;
     width: 100%;
     height: 100%;
     background: #fff0f6;
-    border: 2px solid #ff99cc;
-    border-radius: 6px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-
-  /* ฝาซอง */
-  .envelope .flap {
-    width: 0;
-    height: 0;
-    border-left: 150px solid transparent;
-    border-right: 150px solid transparent;
-    border-bottom: 100px solid #ffb3d1;
-    position: absolute;
-    top: -100px;
-    left: 0;
-    transform-origin: top center;
-    transition: transform 1s ease;
-    z-index: 2;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  }
-
-  .envelope.open .flap {
-    transform: rotateX(180deg);
-  }
-
-  .text-hint {
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    top: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     font-family: 'Great Vibes', cursive;
-    font-size: 1.5rem;
+    font-size: 20px;
     color: #ff4d94;
-    z-index: 3;
-    pointer-events: none;
+    border-radius: 15px;
+    backface-visibility: hidden;
+    transform: rotateY(180deg);
+  }
+
+  #messageText {
+    margin-top: 10px;
+    text-align: center;
+    font-family: 'Great Vibes', cursive;
+    font-size: 18px;
+    color: #ff4d94;
   }
 </style>
 </head>
 <body>
 
-<div class="envelope-container" id="envelopeContainer">
-  <div class="envelope" id="envelope">
-    <div class="flap"></div>
-    <div class="body"></div>
-    <div class="text-hint">💌 กดเพื่อเปิดซอง 💌</div>
-  </div>
+<!-- หัวใจใหญ่ -->
+<div id="heartWrapper">
+  <svg viewBox="0 0 32 29.6">
+    <path d="M23.6,0c-2.7,0-5.1,1.6-6.6,3.9C15.5,1.6,13.1,0,10.4,0C4.7,0,0,4.7,0,10.4
+      c0,6.3,6.3,11.4,15.8,19.2L16,29.6l0.2-0.1C25.7,21.8,32,16.7,32,10.4C32,4.7,27.3,0,23.6,0z"/>
+  </svg>
 </div>
 
+<!-- กระดาษ A4 -->
+<div id="paper">
+  <div id="carousel">
+    <div class="card" style="background-image: url('memory1.jpg');">
+      <div class="back">ความทรงจำ 1 💖</div>
+    </div>
+    <div class="card" style="background-image: url('memory2.jpg');">
+      <div class="back">ความทรงจำ 2 💖</div>
+    </div>
+    <div class="card" style="background-image: url('memory3.jpg');">
+      <div class="back">ความทรงจำ 3 💖</div>
+    </div>
+  </div>
+  <p id="messageText">สุขสันต์วันเกิดนะ 💌 เลื่อนดูความทรงจำ</p>
+</div>
+
+<!-- เพลง -->
+<audio id="bgMusic">
+  <source src="https://github.com/660710112/surprise/raw/main/Boyd%20Kosiyabong%20-%20เหมือนเคย%20ft.%20Seattha%20Sirachaya%20(Official%20Lyric%20Video)(mp3j.cc).mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
 <script>
-  const envelope = document.getElementById("envelope");
-  envelope.addEventListener("click", () => {
-    envelope.classList.toggle("open");
+const heartWrapper = document.getElementById("heartWrapper");
+const paper = document.getElementById("paper");
+const music = document.getElementById("bgMusic");
+const hookStart = 69;
+const hookEnd = 150;
+const carousel = document.getElementById("carousel");
+const cards = carousel.querySelectorAll(".card");
+const messageText = document.getElementById("messageText");
+
+let startX = 0;
+let currentTranslate = 0;
+let currentIndex = 0;
+
+// คลิกหัวใจ → แสดงกระดาษ + เล่นเพลง
+heartWrapper.addEventListener("click", () => {
+  paper.classList.add("show");
+  music.currentTime = hookStart;
+  music.play().catch(()=>{});
+});
+
+// ให้เพลงหยุดที่ hookEnd
+music.addEventListener('timeupdate', () => {
+  if(music.currentTime >= hookEnd){
+    music.pause();
+  }
+});
+
+// Touch event สำหรับ swipe
+carousel.addEventListener("touchstart", e => { startX = e.touches[0].clientX; });
+
+carousel.addEventListener("touchmove", e => {
+  const dx = e.touches[0].clientX - startX;
+  carousel.style.transform = `translateX(${currentTranslate + dx}px)`;
+});
+
+carousel.addEventListener("touchend", e => {
+  const dx = e.changedTouches[0].clientX - startX;
+  if (dx < -50 && currentIndex < cards.length - 1) currentIndex++;
+  else if (dx > 50 && currentIndex > 0) currentIndex--;
+  currentTranslate = -currentIndex * paper.clientWidth;
+  carousel.style.transform = `translateX(${currentTranslate}px)`;
+  messageText.textContent = `ความทรงจำ ${currentIndex + 1} 💌`;
+});
+
+// คลิกเพื่อพลิกการ์ด
+cards.forEach(card => {
+  card.addEventListener("click", () => {
+    card.classList.toggle("flipped");
   });
+});
 </script>
 
 </body>
