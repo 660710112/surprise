@@ -6,7 +6,7 @@
 <title>Birthday Magic Letter</title>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
-  body {
+body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
     background: #fff0f6;
@@ -15,10 +15,10 @@
     align-items: center;
     height: 100vh;
     overflow: hidden;
-  }
+}
 
-  /* หัวใจเด้ง */
-  #heartWrapper {
+/* หัวใจเด้ง */
+#heartWrapper {
     width: 220px;
     height: 220px;
     cursor: pointer;
@@ -26,17 +26,17 @@
     justify-content: center;
     align-items: center;
     z-index: 10;
-  }
-  #heartWrapper svg {
+}
+#heartWrapper svg {
     width: 100%;
     height: 100%;
     fill: red;
     animation: pulse 1s infinite alternate;
-  }
-  @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.2); } }
+}
+@keyframes pulse { from { transform: scale(1); } to { transform: scale(1.2); } }
 
-  /* กระดาษเวทมนต์ */
-  #magicLetter {
+/* กระดาษเวทมนต์ */
+#magicLetter {
     width: 90%;
     max-width: 400px;
     height: 450px;
@@ -47,14 +47,18 @@
     transform: translate(-50%, -50%) scale(0);
     transition: transform 0.8s ease;
     z-index: 50;
-  }
-  #magicLetter.show { transform: translate(-50%, -50%) scale(1); }
+    pointer-events: none; /* ไม่ให้บังหัวใจก่อนโชว์ */
+}
+#magicLetter.show {
+    transform: translate(-50%, -50%) scale(1);
+    pointer-events: auto; /* ให้คลิกได้เมื่อโชว์ */
+}
 
-  #magicLetterInner { width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; position: relative; cursor: pointer; }
-  #magicLetter.flipped #magicLetterInner { transform: rotateY(180deg); }
+#magicLetterInner { width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; position: relative; cursor: pointer; }
+#magicLetter.flipped #magicLetterInner { transform: rotateY(180deg); }
 
-  /* หน้า front ข้อความ */
-  #magicLetterFront, #magicLetterBack {
+/* หน้า front ข้อความ */
+#magicLetterFront, #magicLetterBack {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -68,19 +72,19 @@
     box-shadow: 0 12px 30px rgba(0,0,0,0.25);
     overflow: auto;
     background: #fffefc;
-  }
-  #magicLetterFront { font-family: 'Great Vibes', cursive; font-size: 18px; color: #ff3366; line-height: 1.6; text-align: center; }
+}
+#magicLetterFront { font-family: 'Great Vibes', cursive; font-size: 18px; color: #ff3366; line-height: 1.6; text-align: center; }
 
-  /* หน้า back รูป 2x2 */
-  #magicLetterBack { transform: rotateY(180deg); flex-direction: column; background: #fff; padding: 10px; }
-  .photo-grid {
+/* หน้า back รูป 2x2 */
+#magicLetterBack { transform: rotateY(180deg); flex-direction: column; background: #fff; padding: 10px; }
+.photo-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 10px;
     width: 100%;
     height: 100%;
-  }
-  .photo-grid .card {
+}
+.photo-grid .card {
     width: 100%;
     height: 0;
     padding-bottom: 100%;
@@ -91,11 +95,11 @@
     box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     border: 5px solid #fff;
     transition: transform 0.2s;
-  }
-  .photo-grid .card:hover { transform: scale(1.05); }
+}
+.photo-grid .card:hover { transform: scale(1.05); }
 
-  /* overlay แสดงภาพใหญ่ */
-  #overlay {
+/* overlay แสดงภาพใหญ่ */
+#overlay {
     position: fixed;
     display: none;
     top: 0; left: 0; width: 100%; height: 100%;
@@ -104,11 +108,11 @@
     align-items: center;
     z-index: 200;
     overflow: hidden;
-  }
-  #overlay img { max-width: 90%; max-height: 90%; border-radius: 10px; transition: transform 0.3s ease; }
+}
+#overlay img { max-width: 90%; max-height: 90%; border-radius: 10px; transition: transform 0.3s ease; }
 
-  /* ปุ่มเลื่อนซ้ายขวา overlay */
-  .nav-arrow {
+/* ปุ่มเลื่อนซ้ายขวา overlay */
+.nav-arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -117,24 +121,24 @@
     cursor: pointer;
     user-select: none;
     padding: 10px;
-  }
-  #prev { left: 10px; }
-  #next { right: 10px; }
+}
+#prev { left: 10px; }
+#next { right: 10px; }
 
-  @media(max-width:500px){
+@media(max-width:500px){
     #magicLetter { height: 400px; }
-    #magicLetterFront { font-size: 18px; }
-  }
+    #magicLetterFront { font-size: 16px; padding: 15px; }
+}
 </style>
 </head>
 <body>
 
 <!-- หัวใจ -->
 <div id="heartWrapper">
-  <svg viewBox="0 0 32 29.6">
-    <path d="M23.6,0c-2.7,0-5.1,1.6-6.6,3.9C15.5,1.6,13.1,0,10.4,0C4.7,0,0,4.7,0,10.4
-      c0,6.3,6.3,11.4,15.8,19.2L16,29.6l0.2-0.1C25.7,21.8,32,16.7,32,10.4C32,4.7,27.3,0,23.6,0z"/>
-  </svg>
+    <svg viewBox="0 0 32 29.6">
+        <path d="M23.6,0c-2.7,0-5.1,1.6-6.6,3.9C15.5,1.6,13.1,0,10.4,0C4.7,0,0,4.7,0,10.4
+        c0,6.3,6.3,11.4,15.8,19.2L16,29.6l0.2-0.1C25.7,21.8,32,16.7,32,10.4C32,4.7,27.3,0,23.6,0z"/>
+    </svg>
 </div>
 
 <!-- กระดาษเวทมนต์ -->
@@ -255,7 +259,7 @@ music.addEventListener('timeupdate', () => {
 // โหลดรูป
 loadImages();
 
-// รองรับการปัดในมือถือ
+// รองรับการปัดในมือถือ overlay
 let startX = 0;
 overlay.addEventListener("touchstart", e => { startX = e.touches[0].clientX; });
 overlay.addEventListener("touchend", e => {
