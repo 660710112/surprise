@@ -6,32 +6,130 @@
 <title>Birthday Magic Letter</title>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
-body {margin:0; height:100vh; background:#fff0f6; display:flex; justify-content:center; align-items:center; overflow:hidden; font-family:'Segoe UI',sans-serif;}
-#heartWrapper {width:220px; height:220px; cursor:pointer; z-index:10; display:flex; justify-content:center; align-items:center;}
-#heartWrapper svg {width:100%; height:100%; fill:red; animation:pulse 1s infinite alternate;}
-@keyframes pulse {from{transform:scale(1);} to{transform:scale(1.2);}}
-#magicLetter {width:90vw; max-width:360px; height:75vh; perspective:1000px; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) scale(0); transition:transform 0.8s ease; z-index:50;}
-#magicLetter.show {transform:translate(-50%,-50%) scale(1);}
-#magicLetterInner {width:100%; height:100%; transition:transform 0.8s; transform-style:preserve-3d; position:relative; cursor:pointer;}
-#magicLetter.flipped #magicLetterInner {transform:rotateY(180deg);}
-#magicLetterFront,#magicLetterBack {position:absolute; width:100%; height:100%; border-radius:20px; backface-visibility:hidden; display:flex; flex-direction:column; align-items:center; padding:20px; box-shadow:0 12px 30px rgba(0,0,0,0.25); overflow:hidden;}
-#magicLetterFront {background:#fffefc; text-align:center; font-family:'Great Vibes',cursive; font-size:20px; color:#ff3366; line-height:1.6;}
-#magicLetterBack {background:#fff; transform:rotateY(180deg); display:flex; flex-direction:column; align-items:center; justify-content:center;}
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #fff0f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
 
-#carousel {display:flex; gap:10px; height:180px; overflow-x:auto; scroll-behavior:smooth; padding:5px;}
-.card {flex:0 0 auto; width:120px; height:160px; border-radius:12px; background-size:cover; background-position:center; cursor:pointer; box-shadow:0 4px 15px rgba(0,0,0,0.3); border:5px solid #fff; transition:transform 0.2s;}
-.card:hover {transform:scale(1.1);}
+  /* หัวใจเด้ง */
+  #heartWrapper {
+    width: 220px;
+    height: 220px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  }
+  #heartWrapper svg {
+    width: 100%;
+    height: 100%;
+    fill: red;
+    animation: pulse 1s infinite alternate;
+  }
+  @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.2); } }
 
-#overlay {display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:999; flex-direction:column;}
-#overlayImg {max-width:95vw; max-height:85vh; border:8px solid #fff; border-radius:12px;}
-.overlayBtn {font-size:50px; color:#fff; cursor:pointer; user-select:none; margin:0 20px;}
-.overlayControls {display:flex; align-items:center;}
+  /* กระดาษเวทมนต์ */
+  #magicLetter {
+    width: 90%;
+    max-width: 400px;
+    height: 450px;
+    perspective: 1000px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.8s ease;
+    z-index: 50;
+  }
+  #magicLetter.show { transform: translate(-50%, -50%) scale(1); }
 
-@media(max-width:400px){#magicLetter{height:80vh;} .card{width:100px; height:140px;}}
+  #magicLetterInner { width: 100%; height: 100%; transition: transform 0.8s; transform-style: preserve-3d; position: relative; cursor: pointer; }
+  #magicLetter.flipped #magicLetterInner { transform: rotateY(180deg); }
+
+  /* หน้า front ข้อความ */
+  #magicLetterFront, #magicLetterBack {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    overflow: auto;
+    background: #fffefc;
+  }
+  #magicLetterFront { font-family: 'Great Vibes', cursive; font-size: 18px; color: #ff3366; line-height: 1.6; text-align: center; }
+
+  /* หน้า back รูป 2x2 */
+  #magicLetterBack { transform: rotateY(180deg); flex-direction: column; background: #fff; padding: 10px; }
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    width: 100%;
+    height: 100%;
+  }
+  .photo-grid .card {
+    width: 100%;
+    height: 0;
+    padding-bottom: 100%;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    border: 5px solid #fff;
+    transition: transform 0.2s;
+  }
+  .photo-grid .card:hover { transform: scale(1.05); }
+
+  /* overlay แสดงภาพใหญ่ */
+  #overlay {
+    position: fixed;
+    display: none;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+    overflow: hidden;
+  }
+  #overlay img { max-width: 90%; max-height: 90%; border-radius: 10px; transition: transform 0.3s ease; }
+
+  /* ปุ่มเลื่อนซ้ายขวา overlay */
+  .nav-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 50px;
+    color: #fff;
+    cursor: pointer;
+    user-select: none;
+    padding: 10px;
+  }
+  #prev { left: 10px; }
+  #next { right: 10px; }
+
+  @media(max-width:500px){
+    #magicLetter { height: 400px; }
+    #magicLetterFront { font-size: 18px; }
+  }
 </style>
 </head>
 <body>
 
+<!-- หัวใจ -->
 <div id="heartWrapper">
   <svg viewBox="0 0 32 29.6">
     <path d="M23.6,0c-2.7,0-5.1,1.6-6.6,3.9C15.5,1.6,13.1,0,10.4,0C4.7,0,0,4.7,0,10.4
@@ -39,95 +137,133 @@ body {margin:0; height:100vh; background:#fff0f6; display:flex; justify-content:
   </svg>
 </div>
 
+<!-- กระดาษเวทมนต์ -->
 <div id="magicLetter">
   <div id="magicLetterInner">
+    <!-- หน้า front ข้อความ -->
     <div id="magicLetterFront">
       สวัสดีครับเจ้าของวันเกิด ชีวิตที่ผ่านมาเป็นยังไงบ้าง มีความสุขมั้ย ต่อจากนี้เมย์ขอให้ปาร์ตี้มีความสุขมากๆเลยนะ จะทำอะไรก็ขอให้มันออกมาดีเมย์จะยืนข้างๆปาร์ตี้แบบนี้ไปตลอดนะ ต่อให้วันนั้นเธอจะประสบความสำเร็จหรือไม่ก็ตามเมย์จะอยู่ซัพพอร์ตความฝันของเธอจนกว่าเธอจะบอกว่ากับเราว่าเธอประสบความสำเร็จแล้ว เมย์ขอยืนข้างๆเธอนะคะ เมย์ภูมิใจในตัวเธอที่สุด เธอเองก็ต้องภูมิใจในตัวเองนะ รักเธอเสมอ
       <br>And may your dreams always guide you, may every step you take be filled with love and joy. I will always be by your side, supporting you, not just today but for all the days to come. Your happiness will always be my happiness.</br>
     </div>
+
+    <!-- หน้า back รูป 2x2 -->
     <div id="magicLetterBack">
-      <div id="carousel"></div>
+      <div class="photo-grid" id="photoGrid"></div>
     </div>
   </div>
 </div>
 
+<!-- overlay แสดงภาพใหญ่ -->
 <div id="overlay">
-  <div class="overlayControls">
-    <div class="overlayBtn" id="prevBtn">&#10094;</div>
-    <img id="overlayImg" src="">
-    <div class="overlayBtn" id="nextBtn">&#10095;</div>
-  </div>
+  <span id="prev" class="nav-arrow">&#10094;</span>
+  <img src="" alt="photo">
+  <span id="next" class="nav-arrow">&#10095;</span>
 </div>
 
+<!-- เพลง -->
 <audio id="bgMusic">
   <source src="https://github.com/660710112/surprise/raw/main/Boyd%20Kosiyabong%20-%20เหมือนเคย%20ft.%20Seattha%20Sirachaya%20(Official%20Lyric%20Video)(mp3j.cc).mp3" type="audio/mpeg">
 </audio>
 
 <script>
-const heartWrapper=document.getElementById("heartWrapper");
-const magicLetter=document.getElementById("magicLetter");
-const music=document.getElementById("bgMusic");
-const hookStart=69,hookEnd=300;
-const carousel=document.getElementById("carousel");
-const overlay=document.getElementById("overlay");
-const overlayImg=document.getElementById("overlayImg");
-const prevBtn=document.getElementById("prevBtn");
-const nextBtn=document.getElementById("nextBtn");
-let images=[],currentIndex=0;
+const heartWrapper = document.getElementById("heartWrapper");
+const magicLetter = document.getElementById("magicLetter");
+const magicLetterInner = document.getElementById("magicLetterInner");
+const music = document.getElementById("bgMusic");
+const hookStart = 69;
+const hookEnd = 300;
+
+const photoGrid = document.getElementById("photoGrid");
+const overlay = document.getElementById("overlay");
+const overlayImg = overlay.querySelector("img");
+const prevBtn = document.getElementById("prev");
+const nextBtn = document.getElementById("next");
+
+let images = [];
+let currentIndex = 0;
 
 // โหลดภาพจาก GitHub
-async function loadImagesFromGitHub(){
-  try{
-    const repo="660710112/surprise";
-    const url=`https://api.github.com/repos/${repo}/contents/`;
-    const res=await fetch(url);
-    const files=await res.json();
-    images=files.filter(f=>/\.(jpg|jpeg|png)$/i.test(f.name)).map(f=>f.download_url);
-    carousel.innerHTML="";
-    images.forEach((imgUrl,i)=>{
-      const div=document.createElement("div");
-      div.className="card";
-      div.style.backgroundImage=`url('${imgUrl}')`;
-      div.addEventListener("click",()=>{
-        currentIndex=i;
-        overlay.style.display="flex";
-        overlayImg.src=images[currentIndex];
-      });
-      carousel.appendChild(div);
-    });
-  }catch(err){console.error("โหลดภาพไม่สำเร็จ",err);}
+async function loadImages() {
+  try {
+    const repo = "660710112/surprise";
+    const path = "";
+    const url = `https://api.github.com/repos/${repo}/contents/${path}`;
+    const res = await fetch(url);
+    const files = await res.json();
+    images = files.filter(file => /\.(jpg|jpeg|png)$/i.test(file.name)).map(f=>f.download_url);
+    renderPhotos();
+  } catch(e) { console.error(e); }
 }
 
-// Heart click
-heartWrapper.addEventListener("click",()=>{
-  heartWrapper.style.display='none';
-  magicLetter.classList.add("show");
-  music.currentTime=hookStart;
-  music.play().catch(()=>{});
-});
-// Letter flip
-magicLetter.addEventListener("click",()=> magicLetter.classList.toggle("flipped"));
-// Music stop
-music.addEventListener("timeupdate",()=>{if(music.currentTime>=hookEnd) music.pause();});
-// Overlay close
-overlay.addEventListener("click",(e)=>{if(e.target===overlay) overlay.style.display="none";});
-// Overlay navigation
-prevBtn.addEventListener("click",(e)=>{e.stopPropagation(); currentIndex=(currentIndex-1+images.length)%images.length; overlayImg.src=images[currentIndex];});
-nextBtn.addEventListener("click",(e)=>{e.stopPropagation(); currentIndex=(currentIndex+1)%images.length; overlayImg.src=images[currentIndex];});
-// Swipe carousel mobile
-let startX=0;
-carousel.addEventListener("touchstart",e=>startX=e.touches[0].clientX);
-carousel.addEventListener("touchmove",e=>{const dx=startX-e.touches[0].clientX; carousel.scrollLeft+=dx; startX=e.touches[0].clientX;});
-// Swipe overlay mobile
-let overlayStartX=0;
-overlay.addEventListener("touchstart",e=>overlayStartX=e.touches[0].clientX);
-overlay.addEventListener("touchend",e=>{
-  const dx=e.changedTouches[0].clientX-overlayStartX;
-  if(dx>50) prevBtn.click();
-  else if(dx<-50) nextBtn.click();
+// render รูป
+function renderPhotos() {
+  photoGrid.innerHTML = "";
+  images.forEach((src,i)=>{
+    const div = document.createElement("div");
+    div.className = "card";
+    div.style.backgroundImage = `url('${src}')`;
+    div.addEventListener("click", ()=>{
+      currentIndex = i;
+      overlayImg.src = images[currentIndex];
+      overlay.style.display="flex";
+    });
+    photoGrid.appendChild(div);
+  });
+}
+
+// overlay ปิด
+overlay.addEventListener("click", (e)=>{
+  if(e.target===overlay) overlay.style.display="none";
 });
 
-loadImagesFromGitHub();
+// overlay navigation
+prevBtn.addEventListener("click", (e)=>{
+  e.stopPropagation();
+  currentIndex = (currentIndex-1+images.length)%images.length;
+  overlayImg.src = images[currentIndex];
+});
+nextBtn.addEventListener("click", (e)=>{
+  e.stopPropagation();
+  currentIndex = (currentIndex+1)%images.length;
+  overlayImg.src = images[currentIndex];
+});
+
+// ------------------- EVENTS -------------------
+heartWrapper.addEventListener("click", () => {
+  heartWrapper.style.display = 'none';
+  magicLetter.classList.add("show");
+  music.currentTime = hookStart;
+  music.play().catch(()=>{});
+});
+
+// คลิกหน้า front → พลิกไปหน้า back
+document.getElementById("magicLetterFront").addEventListener("click", (e)=>{
+  magicLetter.classList.add("flipped");
+  e.stopPropagation();
+});
+
+// หน้า back ไม่ต้องพลิกกลับ
+document.getElementById("magicLetterBack").addEventListener("click", (e)=>{
+  e.stopPropagation();
+});
+
+// เพลงหยุด
+music.addEventListener('timeupdate', () => {
+  if(music.currentTime >= hookEnd) music.pause();
+});
+
+// โหลดรูป
+loadImages();
+
+// รองรับการปัดในมือถือ
+let startX = 0;
+overlay.addEventListener("touchstart", e => { startX = e.touches[0].clientX; });
+overlay.addEventListener("touchend", e => {
+  let dx = e.changedTouches[0].clientX - startX;
+  if(dx>50) prevBtn.click();
+  if(dx<-50) nextBtn.click();
+});
 </script>
+
 </body>
 </html>
