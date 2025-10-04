@@ -6,28 +6,28 @@
 <title>Birthday Magic Letter</title>
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
-  body { margin:0; height:100vh; background:#fff0f6; display:flex; justify-content:center; align-items:center; overflow:hidden; font-family:'Segoe UI',sans-serif; }
-  #heartWrapper { width:220px; height:220px; cursor:pointer; z-index:10; display:flex; justify-content:center; align-items:center; }
-  #heartWrapper svg { width:100%; height:100%; fill:red; animation:pulse 1s infinite alternate; }
-  @keyframes pulse { from{transform:scale(1);} to{transform:scale(1.2);} }
-  #magicLetter { width:90vw; max-width:360px; height:70vh; perspective:1000px; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) scale(0); transition:transform 0.8s ease; z-index:50; }
-  #magicLetter.show { transform:translate(-50%,-50%) scale(1); }
-  #magicLetterInner { width:100%; height:100%; transition:transform 0.8s; transform-style:preserve-3d; position:relative; cursor:pointer; }
-  #magicLetter.flipped #magicLetterInner { transform:rotateY(180deg); }
-  #magicLetterFront,#magicLetterBack { position:absolute; width:100%; height:100%; border-radius:20px; backface-visibility:hidden; display:flex; flex-direction:column; align-items:center; padding:20px; box-shadow:0 12px 30px rgba(0,0,0,0.25); overflow:hidden; }
-  #magicLetterFront { background:#fffefc; text-align:center; font-family:'Great Vibes',cursive; font-size:20px; color:#ff3366; line-height:1.6; }
-  #magicLetterBack { background:#fff; transform:rotateY(180deg); display:flex; flex-direction:column; align-items:center; justify-content:center; }
+body {margin:0; height:100vh; background:#fff0f6; display:flex; justify-content:center; align-items:center; overflow:hidden; font-family:'Segoe UI',sans-serif;}
+#heartWrapper {width:220px; height:220px; cursor:pointer; z-index:10; display:flex; justify-content:center; align-items:center;}
+#heartWrapper svg {width:100%; height:100%; fill:red; animation:pulse 1s infinite alternate;}
+@keyframes pulse {from{transform:scale(1);} to{transform:scale(1.2);}}
+#magicLetter {width:90vw; max-width:360px; height:75vh; perspective:1000px; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) scale(0); transition:transform 0.8s ease; z-index:50;}
+#magicLetter.show {transform:translate(-50%,-50%) scale(1);}
+#magicLetterInner {width:100%; height:100%; transition:transform 0.8s; transform-style:preserve-3d; position:relative; cursor:pointer;}
+#magicLetter.flipped #magicLetterInner {transform:rotateY(180deg);}
+#magicLetterFront,#magicLetterBack {position:absolute; width:100%; height:100%; border-radius:20px; backface-visibility:hidden; display:flex; flex-direction:column; align-items:center; padding:20px; box-shadow:0 12px 30px rgba(0,0,0,0.25); overflow:hidden;}
+#magicLetterFront {background:#fffefc; text-align:center; font-family:'Great Vibes',cursive; font-size:20px; color:#ff3366; line-height:1.6;}
+#magicLetterBack {background:#fff; transform:rotateY(180deg); display:flex; flex-direction:column; align-items:center; justify-content:center;}
 
-  #carouselContainer { width:100%; overflow:hidden; }
-  #carousel { display:flex; gap:10px; height:180px; scroll-behavior:smooth; }
-  .card { flex:0 0 auto; width:120px; height:160px; border-radius:12px; background-size:cover; background-position:center; cursor:pointer; box-shadow:0 4px 15px rgba(0,0,0,0.3); border:5px solid #fff; transition:transform 0.2s; }
-  .card:hover { transform:scale(1.1); }
+#carousel {display:flex; gap:10px; height:180px; overflow-x:auto; scroll-behavior:smooth; padding:5px;}
+.card {flex:0 0 auto; width:120px; height:160px; border-radius:12px; background-size:cover; background-position:center; cursor:pointer; box-shadow:0 4px 15px rgba(0,0,0,0.3); border:5px solid #fff; transition:transform 0.2s;}
+.card:hover {transform:scale(1.1);}
 
-  #overlay { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:999; flex-direction:column; }
-  #overlayImg { max-width:90vw; max-height:80vh; border:8px solid #fff; border-radius:12px; margin-bottom:10px; }
-  .overlayBtn { font-size:40px; color:#fff; cursor:pointer; user-select:none; margin:0 20px; }
+#overlay {display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; z-index:999; flex-direction:column;}
+#overlayImg {max-width:95vw; max-height:85vh; border:8px solid #fff; border-radius:12px;}
+.overlayBtn {font-size:50px; color:#fff; cursor:pointer; user-select:none; margin:0 20px;}
+.overlayControls {display:flex; align-items:center;}
 
-  @media(max-width:400px){ #magicLetter { height:75vh; } .card{ width:100px; height:140px; } }
+@media(max-width:400px){#magicLetter{height:80vh;} .card{width:100px; height:140px;}}
 </style>
 </head>
 <body>
@@ -46,13 +46,13 @@
       <br>And may your dreams always guide you, may every step you take be filled with love and joy. I will always be by your side, supporting you, not just today but for all the days to come. Your happiness will always be my happiness.</br>
     </div>
     <div id="magicLetterBack">
-      <div id="carouselContainer"><div id="carousel"></div></div>
+      <div id="carousel"></div>
     </div>
   </div>
 </div>
 
 <div id="overlay">
-  <div style="display:flex; align-items:center;">
+  <div class="overlayControls">
     <div class="overlayBtn" id="prevBtn">&#10094;</div>
     <img id="overlayImg" src="">
     <div class="overlayBtn" id="nextBtn">&#10095;</div>
@@ -64,30 +64,25 @@
 </audio>
 
 <script>
-const heartWrapper = document.getElementById("heartWrapper");
-const magicLetter = document.getElementById("magicLetter");
-const magicLetterInner = document.getElementById("magicLetterInner");
-const music = document.getElementById("bgMusic");
-const hookStart = 69;
-const hookEnd = 300;
-const carousel = document.getElementById("carousel");
-const overlay = document.getElementById("overlay");
-const overlayImg = document.getElementById("overlayImg");
-const prevBtn = document.getElementById("prevBtn");
-const nextBtn = document.getElementById("nextBtn");
-
-let images = [];
-let currentIndex = 0;
+const heartWrapper=document.getElementById("heartWrapper");
+const magicLetter=document.getElementById("magicLetter");
+const music=document.getElementById("bgMusic");
+const hookStart=69,hookEnd=300;
+const carousel=document.getElementById("carousel");
+const overlay=document.getElementById("overlay");
+const overlayImg=document.getElementById("overlayImg");
+const prevBtn=document.getElementById("prevBtn");
+const nextBtn=document.getElementById("nextBtn");
+let images=[],currentIndex=0;
 
 // โหลดภาพจาก GitHub
 async function loadImagesFromGitHub(){
   try{
     const repo="660710112/surprise";
-    const path="";
-    const url=`https://api.github.com/repos/${repo}/contents/${path}`;
-    const res = await fetch(url);
-    const files = await res.json();
-    images = files.filter(file=>/\.(jpg|jpeg|png)$/i.test(file.name)).map(f=>f.download_url);
+    const url=`https://api.github.com/repos/${repo}/contents/`;
+    const res=await fetch(url);
+    const files=await res.json();
+    images=files.filter(f=>/\.(jpg|jpeg|png)$/i.test(f.name)).map(f=>f.download_url);
     carousel.innerHTML="";
     images.forEach((imgUrl,i)=>{
       const div=document.createElement("div");
@@ -100,7 +95,7 @@ async function loadImagesFromGitHub(){
       });
       carousel.appendChild(div);
     });
-  }catch(err){ console.error("โหลดภาพไม่สำเร็จ",err);}
+  }catch(err){console.error("โหลดภาพไม่สำเร็จ",err);}
 }
 
 // Heart click
@@ -113,23 +108,16 @@ heartWrapper.addEventListener("click",()=>{
 // Letter flip
 magicLetter.addEventListener("click",()=> magicLetter.classList.toggle("flipped"));
 // Music stop
-music.addEventListener("timeupdate",()=>{ if(music.currentTime>=hookEnd) music.pause(); });
+music.addEventListener("timeupdate",()=>{if(music.currentTime>=hookEnd) music.pause();});
 // Overlay close
-overlay.addEventListener("click",(e)=>{ if(e.target===overlay) overlay.style.display="none"; });
-
+overlay.addEventListener("click",(e)=>{if(e.target===overlay) overlay.style.display="none";});
 // Overlay navigation
-prevBtn.addEventListener("click",(e)=>{ e.stopPropagation(); currentIndex=(currentIndex-1+images.length)%images.length; overlayImg.src=images[currentIndex]; });
-nextBtn.addEventListener("click",(e)=>{ e.stopPropagation(); currentIndex=(currentIndex+1)%images.length; overlayImg.src=images[currentIndex]; });
-
+prevBtn.addEventListener("click",(e)=>{e.stopPropagation(); currentIndex=(currentIndex-1+images.length)%images.length; overlayImg.src=images[currentIndex];});
+nextBtn.addEventListener("click",(e)=>{e.stopPropagation(); currentIndex=(currentIndex+1)%images.length; overlayImg.src=images[currentIndex];});
 // Swipe carousel mobile
 let startX=0;
 carousel.addEventListener("touchstart",e=>startX=e.touches[0].clientX);
-carousel.addEventListener("touchmove",e=>{
-  const dx=startX-e.touches[0].clientX;
-  carousel.scrollLeft+=dx;
-  startX=e.touches[0].clientX;
-});
-
+carousel.addEventListener("touchmove",e=>{const dx=startX-e.touches[0].clientX; carousel.scrollLeft+=dx; startX=e.touches[0].clientX;});
 // Swipe overlay mobile
 let overlayStartX=0;
 overlay.addEventListener("touchstart",e=>overlayStartX=e.touches[0].clientX);
