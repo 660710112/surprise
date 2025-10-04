@@ -38,56 +38,136 @@
     to { transform: scale(1.2); }
   }
 
-  /* กระดาษเวทมนต์พอดีจอ iPhone */
+  /* กระดาษเวทมนต์ */
   #magicLetter {
     width: 90%;
     max-width: 360px;
     height: 450px;
-    background: #fffefc;
-    border-radius: 20px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    perspective: 1000px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
     transition: transform 0.8s ease;
+    z-index: 50;
+  }
+
+  #magicLetter.show {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  #magicLetterInner {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+    position: relative;
+    cursor: pointer;
+  }
+
+  #magicLetter.flipped #magicLetterInner {
+    transform: rotateY(180deg);
+  }
+
+  /* หน้า front (ข้อความ) */
+  #magicLetterFront, #magicLetterBack {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    backface-visibility: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 25px;
-    z-index: 50;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    overflow: hidden;
+  }
+
+  #magicLetterFront {
+    background: #fffefc;
     text-align: center;
     font-family: 'Great Vibes', cursive;
     font-size: 20px;
     color: #ff3366;
     line-height: 1.6;
-    cursor: default;
-    overflow: hidden;
-  }
-  #magicLetter.show {
-    transform: translate(-50%, -50%) scale(1);
   }
 
-  /* Carousel รูปภาพ */
+  /* หน้า back (carousel Polaroid) */
+  #magicLetterBack {
+    background: #fff;
+    transform: rotateY(180deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
   #carousel {
     width: 100%;
-    height: 150px;
+    height: 200px;
     display: flex;
-    margin-top: 10px;
-    overflow: hidden;
-    touch-action: pan-y;
+    gap: 15px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
   }
+
   .card {
-    width: 100%;
-    flex-shrink: 0;
-    height: 100%;
-    border-radius: 15px;
+    flex: 0 0 auto;
+    width: 150px;
+    height: 180px;
+    border-radius: 10px;
     background-size: cover;
     background-position: center;
     cursor: pointer;
-    backface-visibility: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    border: 5px solid #fff;
     position: relative;
+    transition: transform 0.2s;
+    scroll-snap-align: center;
   }
+
+  .card:hover {
+    transform: scale(1.1);
+  }
+
+  /* Overlay สำหรับขยายรูป */
+  #overlay {
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    cursor: pointer;
+    perspective: 1000px;
+  }
+
+  #overlay img {
+    max-width: 80%;
+    max-height: 80%;
+    border: 10px solid #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+  }
+
+  #overlay.show img {
+    transform: rotateY(0deg) scale(1);
+  }
+
+  #overlay img.flip {
+    transform: rotateY(180deg) scale(1);
+  }
+
 </style>
 </head>
 <body>
@@ -102,16 +182,24 @@
 
 <!-- กระดาษเวทมนต์ -->
 <div id="magicLetter">
-  <div id="textContent">
-    สวัสดีครับเจ้าของวันเกิด ชีวิตที่ผ่านมาเป็นยังไงบ้าง มีความสุขมั้ย ต่อจากนี้เมย์ขอให้ปาร์ตี้มีความสุขมากๆเลยนะ จะทำอะไรก็ขอให้มันออกมาดีเมย์จะยืนข้างๆปาร์ตี้แบบนี้ไปตลอดนะ ต่อให้วันนั้นเธอจะประสบความสำเร็จหรือไม่ก็ตามเมย์จะอยู่ซัพพอร์ตความฝันของเธอจนกว่าเธอจะบอกว่ากับเราว่าเธอประสบความสำเร็จแล้ว เมย์ขอยืนข้างๆเธอนะคะ เมย์ภูมิใจในตัวเธอที่สุด เธอเองก็ต้องภูมิใจในตัวเองนะ รักเธอเสมอ
-    <br>And may your dreams always guide you, may every step you take be filled with love and joy. I will always be by your side, supporting you, not just today but for all the days to come. Your happiness will always be my happiness.
+  <div id="magicLetterInner">
+    <!-- หน้า front ข้อความ -->
+    <div id="magicLetterFront">
+      สวัสดีครับเจ้าของวันเกิด ชีวิตที่ผ่านมาเป็นยังไงบ้าง มีความสุขมั้ย ต่อจากนี้เมย์ขอให้ปาร์ตี้มีความสุขมากๆเลยนะ จะทำอะไรก็ขอให้มันออกมาดีเมย์จะยืนข้างๆปาร์ตี้แบบนี้ไปตลอดนะ ต่อให้วันนั้นเธอจะประสบความสำเร็จหรือไม่ก็ตามเมย์จะอยู่ซัพพอร์ตความฝันของเธอจนกว่าเธอจะบอกว่ากับเราว่าเธอประสบความสำเร็จแล้ว เมย์ขอยืนข้างๆเธอนะคะ เมย์ภูมิใจในตัวเธอที่สุด เธอเองก็ต้องภูมิใจในตัวเองนะ รักเธอเสมอ
+      <br>And may your dreams always guide you, may every step you take be filled with love and joy. I will always be by your side, supporting you, not just today but for all the days to come. Your happiness will always be my happiness.</br>
+    </div>
+    <!-- หน้า back (carousel ภาพ) -->
+    <div id="magicLetterBack">
+      <div id="carousel">
+        <!-- ภาพจะถูกโหลดอัตโนมัติจาก GitHub -->
+      </div>
+    </div>
   </div>
+</div>
 
-  <div id="carousel">
-    <div class="card" style="background-image: url('memory1.jpg');"></div>
-    <div class="card" style="background-image: url('memory2.jpg');"></div>
-    <div class="card" style="background-image: url('memory3.jpg');"></div>
-  </div>
+<!-- Overlay ขยายรูป -->
+<div id="overlay">
+  <img src="" id="overlayImg">
 </div>
 
 <!-- เพลง -->
@@ -122,18 +210,44 @@
 <script>
 const heartWrapper = document.getElementById("heartWrapper");
 const magicLetter = document.getElementById("magicLetter");
+const magicLetterInner = document.getElementById("magicLetterInner");
 const music = document.getElementById("bgMusic");
 const hookStart = 69;
-const hookEnd = 150;
+const hookEnd = 300;
 const carousel = document.getElementById("carousel");
-const cards = carousel.querySelectorAll(".card");
+const overlay = document.getElementById("overlay");
+const overlayImg = document.getElementById("overlayImg");
 
-let startX = 0;
-let currentTranslate = 0;
-let currentIndex = 0;
-let isDragging = false;
+// ---------------- LOAD IMAGES ----------------
+async function loadImagesFromGitHub() {
+  try {
+    const repo = "660710112/surprise"; 
+    const path = ""; 
+    const url = `https://api.github.com/repos/${repo}/contents/${path}`;
+    const res = await fetch(url);
+    const files = await res.json();
 
-// คลิกหัวใจ → ซ่อนหัวใจ + แสดงกระดาษ + เล่นเพลง
+    const images = files.filter(file => /\.(jpg|jpeg|png)$/i.test(file.name));
+
+    carousel.innerHTML = "";
+
+    images.forEach(img => {
+      const div = document.createElement("div");
+      div.className = "card";
+      div.style.backgroundImage = `url('${img.download_url}')`;
+      div.addEventListener("click", () => {
+        overlayImg.src = img.download_url;
+        overlay.style.display = "flex";
+        overlay.classList.add("show");
+      });
+      carousel.appendChild(div);
+    });
+  } catch (err) {
+    console.error("โหลดภาพไม่สำเร็จ", err);
+  }
+}
+
+// ---------------- EVENTS ----------------
 heartWrapper.addEventListener("click", () => {
   heartWrapper.style.display = 'none';
   magicLetter.classList.add("show");
@@ -141,59 +255,32 @@ heartWrapper.addEventListener("click", () => {
   music.play().catch(()=>{});
 });
 
-// เพลงหยุด
+magicLetter.addEventListener("click", () => {
+  magicLetter.classList.toggle("flipped");
+});
+
 music.addEventListener('timeupdate', () => {
   if(music.currentTime >= hookEnd) music.pause();
 });
 
-// ฟังก์ชันอัปเดตตำแหน่ง carousel
-function updateCarousel() {
-  currentTranslate = -currentIndex * magicLetter.clientWidth;
-  carousel.style.transition = 'transform 0.3s ease';
-  carousel.style.transform = `translateX(${currentTranslate}px)`;
-}
-
-// Touch สำหรับมือถือ
-carousel.addEventListener("touchstart", e => {
-  startX = e.touches[0].clientX;
-  carousel.style.transition = 'none';
-});
+// Swipe carousel
+let startX = 0;
+carousel.addEventListener("touchstart", e => { startX = e.touches[0].clientX; });
 carousel.addEventListener("touchmove", e => {
-  const dx = e.touches[0].clientX - startX;
-  carousel.style.transform = `translateX(${currentTranslate + dx}px)`;
+  const dx = startX - e.touches[0].clientX;
+  carousel.scrollLeft += dx;
+  startX = e.touches[0].clientX;
 });
-carousel.addEventListener("touchend", e => {
-  const dx = e.changedTouches[0].clientX - startX;
-  if (dx < -50 && currentIndex < cards.length - 1) currentIndex++;
-  else if (dx > 50 && currentIndex > 0) currentIndex--;
-  updateCarousel();
+carousel.addEventListener("touchend", e => {});
+
+// ปิด overlay เมื่อคลิกรูป
+overlay.addEventListener("click", () => {
+  overlay.classList.remove("show");
+  setTimeout(() => overlay.style.display = "none", 600);
 });
 
-// Mouse สำหรับ desktop
-carousel.addEventListener("mousedown", e => {
-  isDragging = true;
-  startX = e.clientX;
-  carousel.style.transition = 'none';
-});
-carousel.addEventListener("mousemove", e => {
-  if(!isDragging) return;
-  const dx = e.clientX - startX;
-  carousel.style.transform = `translateX(${currentTranslate + dx}px)`;
-});
-carousel.addEventListener("mouseup", e => {
-  if(!isDragging) return;
-  isDragging = false;
-  const dx = e.clientX - startX;
-  if (dx < -50 && currentIndex < cards.length - 1) currentIndex++;
-  else if (dx > 50 && currentIndex > 0) currentIndex--;
-  updateCarousel();
-});
-carousel.addEventListener("mouseleave", e => {
-  if(isDragging){
-    isDragging = false;
-    updateCarousel();
-  }
-});
+// โหลดภาพ
+loadImagesFromGitHub();
 </script>
 
 </body>
